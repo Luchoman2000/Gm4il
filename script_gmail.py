@@ -133,7 +133,7 @@ while True:
     
     else:
         o = int(o)
-        if o > 0 and o < 6 or o == 99:
+        if o > 0 and o < 7 or o == 99:
             if o == 1:
                 while True:
                     os.system ("cls")
