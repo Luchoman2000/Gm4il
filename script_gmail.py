@@ -140,12 +140,13 @@ while True:
         o = int(o)
         if o > 0 and o < 7 or o == 99:
             if o == 1:
+                a = cr
                 while True:
                     clear()
                     
                     patron = re.compile(r'@gmail.com$')
                     print(FG,B+"Correo del remitente: ",FW+FB+"\tpara cancelar['X']",FW)
-                    a = cr
+                    
                     cr = input()
 
                     if patron.search(cr) != None:
@@ -157,20 +158,22 @@ while True:
                         print(FR,B,"[ERROR CORREO]:",FW,"Se admiten solo correos gmail")
                         sleep(1)
             if o == 2:
+                a = pr
                 while True:
                     clear()
                     print(FG,"Clave del remitente: ",FW+FB+"\tpara cancelar['X']",FW)
-                    a = pr
+                    
                     pr = getpass.getpass()
                     if pr == 'X':
                         pr = a
                         break
                     break
             if o == 3:
+                a = cd
                 while True:
                     clear()
                     print(FG,B+"Para(Correo del receptor): ",FW+FB+"\tpara cancelar['X']",FW)
-                    a = cd
+                    
                     cd = input()
                     if cd == 'X':
                         cd = a
@@ -178,10 +181,11 @@ while True:
                     break
                     
             if o == 4:
+                a =sms
                 while True:
                     clear()
                     print(FG,B+"Mentaje en formato HTML(Doble enter para terminar): ",FW+FB+"\tpara cancelar['X']",FW)
-                    a =sms
+                    
                     lines = []
                     while True:
                         line = input()
@@ -197,21 +201,23 @@ while True:
                         break
                     break
             if o == 5:
+                a = adj
                 while True:
                     clear()
                     print(FG,B+"Nombre de archivo a adjuntar Ej. 'texto.txt'\n (el archivo debe estar en la misma carpeta del script): ",FW+FB+"\tpara cancelar['X']",FW)
                     
-                    a = adj
+                    
                     adj = input()
                     if adj == 'X':
                         adj = a
                         break
                     break
             if o == 6:
+                a = asu
                 while True:
                     clear()
                     print(FG,B+"Asunto: ",FW+FB+"\tpara cancelar['X']",FW)
-                    a = asu
+                    
                     asu = input()
                     if asu == 'X':
                         asu = a
