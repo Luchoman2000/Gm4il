@@ -24,6 +24,11 @@ asu = ''
 msg = MIMEMultipart()
 aux = False
 
+def clear():
+    if os.name == "posix":
+        os.system("clear")
+    elif os.name == "ce" or os.name == "nt" or os.name == "dos":
+        os.system("cls")
 try:
     server = smtplib.SMTP('smtp.gmail.com: 587')
     server.starttls()
@@ -35,12 +40,12 @@ except:
     sleep(1)
 
 
-#sendemail('mail_destinatario','tugmail@gmail.com')
+
 def banner():
     print(Style.DIM+"╔════════════════════════════════════════════════════════════════════╗"+SR)
     print("║                                                                    ║")
     print(B+"║    "+B+ "Bienvenido a mi herramienta para envios de mensajes",R,"GMAIL      "+B+"║"+SR)
-    print("║                            "+FB+B+"BY:"+FA+"Lman"+FW+B+"                                 ║")
+    print("║                            "+FB+B+"BY:"+FA+"Lman"+FW+B+"                                 "+R+"║")
     print(Style.DIM+"╚════════════════════════════════════════════════════════════════════╝"+SR)
 
 def login(pas,adress):
@@ -75,7 +80,7 @@ def arch_adjunto(adj):
     print(FG+B,"Adjuntado :D\n"+FW)
 
 while True:
-    os.system ("cls") 
+    clear()
     banner()
     print(B+"[*]:",R+"Para realizar el envio correctamente debe llenar los siguentes parametros:\n")
 
@@ -106,7 +111,7 @@ while True:
     o = input("Elige que quieres llenar: ")
 
     if o == 'y' and aux == True :
-        os.system ("cls")
+        clear()
         try:
             login(pr,cr)
             sleep(1)
@@ -123,7 +128,7 @@ while True:
             print(FR+B+"[ERROR ENVIO]: "+FW+"Error al enviar el mensaje")
             sleep(2)
         
-        print(FB+B+"Mensaje enviado exidosamente")
+        print(FB+B+"Mensaje enviado exidosamente"+FW+R)
         server.quit()
 
         
@@ -136,30 +141,47 @@ while True:
         if o > 0 and o < 7 or o == 99:
             if o == 1:
                 while True:
-                    os.system ("cls")
+                    clear()
+                    
                     patron = re.compile(r'@gmail.com$')
-                    print(FG,"Correo del remitente: ",FW)
+                    print(FG,B+"Correo del remitente: ",FW+FB+"\tpara cancelar['X']",FW)
+                    a = cr
                     cr = input()
+
                     if patron.search(cr) != None:
+                        break
+                    elif cr == 'X':
+                        cr = a
                         break
                     else:
                         print(FR,B,"[ERROR CORREO]:",FW,"Se admiten solo correos gmail")
+                        sleep(1)
             if o == 2:
                 while True:
-                    os.system ("cls")
-                    print(FG,"Clave del remitente: ",FW)
+                    clear()
+                    print(FG,"Clave del remitente: ",FW+FB+"\tpara cancelar['X']",FW)
+                    a = pr
                     pr = getpass.getpass()
+                    if pr == 'X':
+                        pr = a
+                        break
                     break
             if o == 3:
                 while True:
-                    os.system ("cls")
-                    print(FG,B+"Para(Correo del receptor): ",FW)
+                    clear()
+                    print(FG,B+"Para(Correo del receptor): ",FW+FB+"\tpara cancelar['X']",FW)
+                    a = cd
                     cd = input()
+                    if cd == 'X':
+                        cd = a
+                        break
                     break
+                    
             if o == 4:
                 while True:
-                    os.system ("cls")
-                    print(FG,B+"Mentaje en formato HTML(Doble enter para terminar): ",FW)
+                    clear()
+                    print(FG,B+"Mentaje en formato HTML(Doble enter para terminar): ",FW+FB+"\tpara cancelar['X']",FW)
+                    a =sms
                     lines = []
                     while True:
                         line = input()
@@ -168,21 +190,35 @@ while True:
                         else:
                             break
                     sms = '\n'.join(lines)
+
+                    
+                    if sms == 'X':
+                        sms = a
+                        break
                     break
             if o == 5:
                 while True:
-                    os.system ("cls")
-                    print(FG,"Archibo adjunto (path): ",FW)
+                    clear()
+                    print(FG,B+"Nombre de archivo a adjuntar Ej. 'texto.txt'\n (el archivo debe estar en la misma carpeta del script): ",FW+FB+"\tpara cancelar['X']",FW)
+                    
+                    a = adj
                     adj = input()
+                    if adj == 'X':
+                        adj = a
+                        break
                     break
             if o == 6:
                 while True:
-                    os.system ("cls")
-                    print(FG,"Asunto: ",FW)
+                    clear()
+                    print(FG,B+"Asunto: ",FW+FB+"\tpara cancelar['X']",FW)
+                    a = asu
                     asu = input()
+                    if asu == 'X':
+                        asu = a
+                        break
                     break
             if o == 99:
-                    os.system ("cls")
+                    clear()
                     print(FR+B,"Saliendo...",FW)
                     sleep(2)
                     server.quit()
