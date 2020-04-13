@@ -1,10 +1,16 @@
-import smtplib,sys,os,getpass,re
-from time import sleep
-from colorama import init, Fore, Back, Style,Cursor
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
+import getpass
+import os
+import re
+import smtplib
+import sys
 from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from time import sleep
+
+from colorama import Back, Cursor, Fore, Style, init
+
 init()
 B = Style.BRIGHT
 R = Style.NORMAL
@@ -23,21 +29,21 @@ adj = ''
 asu = ''
 msg = MIMEMultipart()
 aux = False
-
+server = smtplib.SMTP('smtp.gmail.com: 587')
 def clear():
     if os.name == "posix":
         os.system("clear")
     elif os.name == "ce" or os.name == "nt" or os.name == "dos":
         os.system("cls")
-try:
-    server = smtplib.SMTP('smtp.gmail.com: 587')
-    server.starttls()
-    #server.ehlo()
-    print(FG+B,"Conectado!"+FW)
-    sleep(1)
-except:
-    print(FR+B+"[ERROR]: "+FW+"Se prdujo un error durante la coneccion")
-    sleep(1)
+def conectar():
+    try:
+        server.starttls()
+        #server.ehlo()
+        print(FG+B,"Conectado!"+FW)
+        sleep(1)
+    except:
+        print(FR+B+"[ERROR]: "+FW+"Se prdujo un error durante la coneccion")
+        sleep(1)
 
 
 
@@ -112,28 +118,35 @@ while True:
 
     if o == 'y' and aux == True :
         clear()
+        conectar()
         try:
             login(pr,cr)
             sleep(1)
-        except:
+            arch_adjunto(adj)
+            sleep(1)
+            enviar_mensaje(asu,sms,cd,cr)
+            print(FB+B+"Mensaje enviado exidosamente"+FW+R)
+            server.quit()
+        except OSError:
+            print(FR+B+"[ERROR ADJUNTAR]: "+FW+"Procura que el archivo que deseas enviar esta en la misma carpeta\n que el script ")
+            sleep(2)
+        except :
             print(FR+B+"[ERROR LOGIN]: "+FW+"Por favor revise sus credenciales o que tenga permitido el\n uso de aplicaciones no seguras en su cuenta")
             sleep(2)
-
-        arch_adjunto(adj)
-        sleep(1)
-        try:
-            enviar_mensaje(asu,sms,cd,cr)
-            sleep(1)
-        except:
-            print(FR+B+"[ERROR ENVIO]: "+FW+"Error al enviar el mensaje")
-            sleep(2)
         
-        print(FB+B+"Mensaje enviado exidosamente"+FW+R)
-        server.quit()
+        #except:
+        #    print(FR+B+"[ERROR ENVIO]: "+FW+"Error al enviar el mensaje")
+         #   sleep(2)
+        
+        
+        
 
         
     elif o.isdigit() == False and aux == False:
         print(FR,B,"[ERROR]:",FW,"Por favor ingrese solo numeros")
+        sleep(1)
+    elif o != 'y' and aux ==True and o.isdigit() == False:
+        print(FR,B,"[ERROR]:",FW,"Ingreso no permitido")
         sleep(1)
     
     else:
@@ -232,7 +245,3 @@ while True:
         else:
             print(FR,B,"[ERROR]:",FW,"Por favor solo ingrese valores del 1 al 6 o 99")
             sleep(1)
-
-
-
-
